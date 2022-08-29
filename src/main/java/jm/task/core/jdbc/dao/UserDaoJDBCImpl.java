@@ -9,7 +9,8 @@ import java.util.List;
 
 public class UserDaoJDBCImpl extends Util implements UserDao {
 
-    //Connection connection = getConnection();
+    //Connection connection = getConnection();  // Удалил, т.к. ментор попросил инициализировать connection
+                                                // внутри методов
 
 
 
