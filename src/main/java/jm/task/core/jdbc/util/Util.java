@@ -8,24 +8,33 @@ public class Util {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "5q81LrDcI7w15!";
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException {
 
         Connection connection = null;
 
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("Соединение с БД установлено");
+            //System.out.println("Соединение с БД установлено");
+
             /*if (!connection.isClosed()) {
                 System.out.println("Соединение с БД установлено");
             }
-            //connection.close();
+            connection.close();
 
              */
         } catch (SQLException e) {
-            System.out.println("Соединение с БД не установлено");
+
         }
         return connection;
     }
+
+    public static void main(String[] args) throws SQLException {
+        getConnection();
+    }
+
+
+
+
 
 
 }
