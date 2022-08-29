@@ -3,6 +3,8 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.service.UserService;
+import jm.task.core.jdbc.service.UserServiceImpl;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.SQLException;
@@ -12,10 +14,11 @@ public class Main {
 
         UserDao userDao = new UserDaoJDBCImpl();
         UserDao userDao1 = new UserDaoHibernateImpl();
+        UserService userService = new UserServiceImpl();
 
         //userDao1.createUsersTable();
         //userDao1.dropUsersTable();
-        userDao1.saveUser("er", "fe", (byte) 12);
+        userService.saveUser("Max", "Kuzmin", (byte) 20);
 
 
 
