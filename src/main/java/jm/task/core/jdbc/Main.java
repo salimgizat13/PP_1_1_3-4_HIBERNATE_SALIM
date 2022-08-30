@@ -12,13 +12,16 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws SQLException {
 
-        UserDao userDao = new UserDaoJDBCImpl();
-        UserDao userDao1 = new UserDaoHibernateImpl();
+        ///////////////////////////////test//////////////////////////////////
+
         UserService userService = new UserServiceImpl();
 
-        //userDao1.createUsersTable();
-        //userDao1.dropUsersTable();
-        userService.saveUser("Max", "Kuzmin", (byte) 20);
+        //userService.createUsersTable();
+        //userService.dropUsersTable();
+        //userService.saveUser("Max", "Kuzmin", (byte) 20);
+        //System.out.println(userService.getAllUsers());
+        //userService.removeUserById(1);
+        //userService.cleanUsersTable();
 
 
 
@@ -34,11 +37,8 @@ public class Main {
 
 
         //userDao.removeUserById(1);
-
         //System.out.println(userDao.getAllUsers());        // -- надо думать
-
         //userDao.cleanUsersTable();     //-- надо думать
-
         //userDao.dropUsersTable();
 
 

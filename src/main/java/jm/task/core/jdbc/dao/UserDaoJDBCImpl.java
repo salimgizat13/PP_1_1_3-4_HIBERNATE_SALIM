@@ -7,7 +7,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoJDBCImpl extends Util implements UserDao {
+import static jm.task.core.jdbc.util.Util.getConnection;
+
+public class UserDaoJDBCImpl implements UserDao {
+
 
 
 
@@ -18,17 +21,13 @@ public class UserDaoJDBCImpl extends Util implements UserDao {
     public void createUsersTable() throws SQLException {
         String sqlCommand = "CREATE TABLE UsersNew (Id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(40), lastname VARCHAR(40),age INT(3))";
 
-        /*try (Statement statement = getConnection().createStatement()) {
-            statement.executeUpdate(sqlCommand);
-            //System.out.println("Таблица создана!");
 
-         */
         try (Connection connection = getConnection()) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(sqlCommand);
-            //System.out.println("Таблица создана!");
+
         } catch (SQLException e) {
-            //System.out.println("Error in creation of table");
+
         }
 
     }

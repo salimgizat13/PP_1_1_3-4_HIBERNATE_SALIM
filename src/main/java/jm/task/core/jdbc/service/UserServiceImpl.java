@@ -12,16 +12,16 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    UserDao userDaoJDBC = new UserDaoJDBCImpl();
+    //UserDao userDaoJDBC = new UserDaoJDBCImpl();
     UserDao userDaoHib = new UserDaoHibernateImpl();
 
 
     public void createUsersTable() throws SQLException {
-        userDaoJDBC.createUsersTable();
+        userDaoHib.createUsersTable();
     }
 
     public void dropUsersTable() throws SQLException {
-        userDaoJDBC.dropUsersTable();
+        userDaoHib.dropUsersTable();
     }
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
@@ -30,15 +30,15 @@ public class UserServiceImpl implements UserService {
     }
 
     public void removeUserById(long id) throws SQLException {
-        userDaoJDBC.removeUserById(id);
+        userDaoHib.removeUserById(id);
 
     }
 
     public List<User> getAllUsers() throws SQLException {
-        return userDaoJDBC.getAllUsers();
+        return userDaoHib.getAllUsers();
     }
 
     public void cleanUsersTable() throws SQLException {
-        userDaoJDBC.cleanUsersTable();
+        userDaoHib.cleanUsersTable();
     }
 }

@@ -22,7 +22,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = sf.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String sql = "CREATE TABLE IF NOT EXISTS usersHib " +
+        String sql = "CREATE TABLE IF NOT EXISTS users " +
                 "(id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                 "name VARCHAR(50) NOT NULL, lastName VARCHAR(50) NOT NULL, " +
                 "age TINYINT NOT NULL)";
@@ -31,7 +31,7 @@ public class UserDaoHibernateImpl implements UserDao {
         query.executeUpdate();    // что в начале, экзекью апдейт или коммит??
         transaction.commit();
         session.close();
-        System.out.println("Successfully created!");
+
     }
 
     @Override
@@ -39,7 +39,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = sf.openSession();
         Transaction transaction = session.beginTransaction();
 
-        String sql = "DROP TABLE IF EXISTS usersHib";
+        String sql = "DROP TABLE IF EXISTS users";
 
         Query query = session.createSQLQuery(sql).addEntity(User.class);
         query.executeUpdate();
@@ -47,34 +47,66 @@ public class UserDaoHibernateImpl implements UserDao {
         System.out.println("Successfully DELETED!");
 
         session.close();
-
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        User user = new User(name, lastName, age);
-        session.save(user);
-        session.getTransaction().commit();
-
-        //System.out.println("Added successfully");
-
+        Transaction transaction = null;
+        try (Session session = sf.openSession()) {
+            transaction = session.beginTransaction();
+            User user = new User(name, lastName, age);
+            session.save(user);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void removeUserById(long id) {
+        Transaction transaction = null;
+        try (Session session = sf.openSession()) {
+            transaction = session.beginTransaction();
+            User user = session.get(User.class, id);
+            session.delete(user);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public List<User> getAllUsers() {
-        return null;
+        Transaction transaction = null;
+        List<User> userList = null;
+        try (Session session = sf.openSession()) {
+            transaction = session.beginTransaction();
+            userList = session.createQuery("from User", User.class).list();
+            transaction.commit();
+        }
+        return userList;
+        /*try (Session session = sf.openSession()) {
+            return session.createQuery("from User", User.class).list();
+        }
+
+         */
     }
 
     @Override
     public void cleanUsersTable() {
+        Transaction transaction = null;
 
+        try (Session session = sf.openSession()) {
+            transaction = session.beginTransaction();
+            session.createQuery("delete User").executeUpdate();
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
