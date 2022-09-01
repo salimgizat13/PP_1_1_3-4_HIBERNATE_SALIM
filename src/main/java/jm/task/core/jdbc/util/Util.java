@@ -23,27 +23,20 @@ public class Util {
 
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            //System.out.println("Соединение с БД установлено");
 
-            /*if (!connection.isClosed()) {
-                System.out.println("Соединение с БД установлено");
-            }
-            connection.close();
-
-             */
         } catch (SQLException e) {
 
         }
         return connection;
     }
+
     public static SessionFactory sessionFactory;
 
-    public static SessionFactory getSessionFactory () {
+    public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
 
-                //без XML файла
                 Properties properties = new Properties();
                 properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
                 properties.put(Environment.URL, "jdbc:mysql://localhost:3306/sys?useSSL=false");
